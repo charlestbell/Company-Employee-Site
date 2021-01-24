@@ -13,50 +13,107 @@ const render = require("./lib/htmlRenderer");
 
 let employees = [];
 
-// Write code to use inquirer to gather information about the development team members,
-inquirer
-  .prompt([
-    {
-      type: "list",
-      message: "What is this employee's Role?",
-      choices: ["Engineer", "Manager", "Intern"],
-      name: "role",
-    },
-  ])
-  .then((response) => {
-    switch (response.role) {
-      case "Engineer":
-        inquirer.prompt(questions.questionsEngineer).then((response) => {});
-        let engineer = new Engineer(
-          response.name,
-          response.id,
-          response.email,
-          response.github
-        );
-        break;
-      case "Manager":
-        inquirer.prompt(questions.questionsManager).then((response) => {});
-        let manager = new Manager(
-          response.name,
-          response.id,
-          response.email,
-          response.officeNum
-        );
-        break;
-      case "Intern":
-        inquirer.prompt(questions.questionsIntern).then((response) => {});
-        let intern = new Intern(
-          response.name,
-          response.id,
-          response.email,
-          response.school
-        );
-        break;
-
-      default:
-        break;
-    }
+function writeToFile() {
+  renderedHTML = render(employees);
+  const dir = "../output";
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+  fs.writeFile("./output/team.html", renderedHTML, () => {
+    console.log("HTML file created.");
   });
+}
+
+let askNext = () => {
+  inquirer
+    .prompt({
+      type: "confirm",
+      message: "Would you like to enter another employee?",
+      name: "askNext",
+    })
+    .then((response) => {
+      if (response.askNext === true) {
+        getEmployeeDeets();
+      } else {
+        writeToFile();
+      }
+    });
+};
+
+const getEmployeeDeets = () => {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "What is this employee's Role?",
+        choices: ["Engineer", "Manager", "Intern"],
+        name: "role",
+      },
+    ])
+    .then((response) => {
+      switch (response.role) {
+        case "Engineer":
+          inquirer
+            .prompt(questions.questionsEngineer)
+            .then((response) => {
+              let engineer = new Engineer(
+                response.name,
+                response.id,
+                response.email,
+                response.github
+              );
+              employees.push(engineer);
+              console.log(`Employee created.`);
+            })
+            .then(() => {
+              askNext();
+            });
+
+          break;
+        case "Manager":
+          inquirer
+            .prompt(questions.questionsManager)
+            .then((response) => {
+              let manager = new Manager(
+                response.name,
+                response.id,
+                response.email,
+                response.officeNum
+              );
+              employees.push(manager);
+              console.log(`Employee created.`);
+            })
+            .then(() => {
+              askNext();
+            });
+
+          break;
+        case "Intern":
+          inquirer
+            .prompt(questions.questionsIntern)
+            .then((response) => {
+              let intern = new Intern(
+                response.name,
+                response.id,
+                response.email,
+                response.school
+              );
+              employees.push(intern);
+              console.log(`Employee created.`);
+            })
+            .then(() => {
+              askNext();
+            });
+
+          break;
+
+        default:
+          break;
+      }
+    });
+};
+getEmployeeDeets();
+
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 // After the user has input all employees desired, call the `render` function (required
