@@ -12,12 +12,12 @@ exports.questionsEngineer = [
   {
     type: "input",
     message: "What is this their email address?",
-    name: "id",
+    name: "email",
   },
   {
     type: "input",
     message: "What is their Github?",
-    name: "role",
+    name: "github",
   },
 ];
 exports.questionsManager = [
@@ -34,7 +34,7 @@ exports.questionsManager = [
   {
     type: "input",
     message: "What is this their email address?",
-    name: "id",
+    name: "email",
   },
   {
     type: "input",
@@ -56,7 +56,7 @@ exports.questionsIntern = [
   {
     type: "input",
     message: "What is this their email address?",
-    name: "id",
+    name: "email",
   },
   {
     type: "input",
