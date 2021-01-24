@@ -1,17 +1,20 @@
-<div class="card employee-card mx-2">
+<div class="card employee-card mx-2 shadow-lg">
   <div class="card-header">
-    <h2 class="card-title">{{ name }}</h2>
-    <h3 class="card-title"><i class="fas fa-glasses mr-2"></i>{{ role }}</h3>
+    <h2 class="card-title text-white">{{ name }}</h2>
+    <h3 class="card-title text-white">
+      <i class="fas fa-glasses mr-2"></i>{{ role }}
+    </h3>
   </div>
   <div class="card-body">
     <ul class="list-group">
-      <li class="list-group-item">ID: {{ id }}</li>
-      <li class="list-group-item">
+      <li class="list-group-item text-white">ID: {{ id }}</li>
+      <li class="list-group-item text-white">
         Email: <a href="mailto:{{ email }}">{{ email }}</a>
       </li>
       <li class="list-group-item">
         GitHub:
         <a
+          class=""
           href="https://github.com/{{ github }}"
           target="_blank"
           rel="noopener noreferrer"
