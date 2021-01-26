@@ -19,7 +19,7 @@ function writeToFile() {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }
-  fs.writeFile("./output/team.html", renderedHTML, () => {
+  fs.writeFile("../output/team.html", renderedHTML, () => {
     console.log("HTML file created.");
   });
 }
